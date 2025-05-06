@@ -11,17 +11,20 @@ public class PlatformManager {
     private List<BasePlatform> platforms;
     private GamePanel gamePanel;
     private boolean canMakeBrekPlatform;
+    private int xStartingPoint;
 
 
-    public PlatformManager(GamePanel gamePanel) {
+    public PlatformManager(GamePanel gamePanel,int xStartingPoint) {
         this.platforms = new ArrayList<>();
         this.gamePanel = gamePanel;
         this.canMakeBrekPlatform = false;
+        this.xStartingPoint=xStartingPoint;
     }
 
     public void generatePlatformsIfNeeded() {
         Random random = new Random();
         int highestY = this.gamePanel.getHeight();
+
         if (!this.platforms.isEmpty()) {
             for (BasePlatform platform : this.platforms) {
                 if (platform.getPlatformY() < highestY) {
@@ -31,6 +34,9 @@ public class PlatformManager {
         }
         while (highestY >= this.gamePanel.getY() - Platform.PLATFORM_HEIGHT) {
             int highestX = random.nextInt(this.gamePanel.getWidth() - Platform.PLATFORM_WIDTH);
+            if(highestY==this.gamePanel.getHeight()){
+                highestX=this.xStartingPoint;
+            }
             int geesLakyNum = random.nextInt(0, LAKY_NUMBER + 1);
             if (!isOverlappingPlatform(highestX, highestY, geesLakyNum)) {
                 if (this.canMakeBrekPlatform && geesLakyNum == LAKY_NUMBER) {

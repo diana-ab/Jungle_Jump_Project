@@ -23,7 +23,7 @@ public class GameEngine extends Thread {
         this.player = player;
         this.platforms = new ArrayList<>();
         this.running = false;
-        platformManager = new PlatformManager(gamePanel);
+        platformManager = new PlatformManager(gamePanel, this.gamePanel.getPlayerStartingX());
         this.platforms = platformManager.getPlatforms();
     }
 
@@ -104,7 +104,6 @@ public class GameEngine extends Thread {
             gamePanel.updateScore(this.score);
             this.gamePanel.repaint();
             this.levelUp();
-
 
 
             try {

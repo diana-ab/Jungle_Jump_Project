@@ -42,6 +42,9 @@ public class GamePanel extends BackgroundPanel {
         return false;
     }
 
+    public int getPlayerStartingX() {
+        return playerStartingX;
+    }
 
     public void startGame() {
         this.playerStartingX = (this.getWidth() / 2) - Player.PLAYER_WIDTH / 2;
