@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.Objects;
 
-public class Menu extends BackgroundPanel {
+public class Menu extends BasePanel {
     public static final int START_BUTTON_WIDTH = 160;
     public static final int START_BUTTON_HEIGHT = 100;
     public static final int INSTRUCTIONS_BUTTON_WIDTH = 180;

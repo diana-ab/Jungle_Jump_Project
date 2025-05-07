@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class BackgroundPanel extends JPanel {
+public class BasePanel extends JPanel {
     public static final int HORIZONTAL_GAP = 20;
     public static final int VERTICAL_GAP = 20;
     public static final int BACK_BUTTON_WIDTH = 180;
@@ -10,7 +10,7 @@ public class BackgroundPanel extends JPanel {
     private Image background;
 
 
-    public BackgroundPanel(int x, int y, int width, int height) {
+    public BasePanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
         this.background =
                 new ImageIcon(getClass().getResource("images/background.png")).getImage();

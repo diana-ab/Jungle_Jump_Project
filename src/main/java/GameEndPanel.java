@@ -1,8 +1,7 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameEndPanel extends BackgroundPanel {
+public class GameEndPanel extends BasePanel {
     private JButton backToMenu;
     private JPanel endButtonPanel;
 

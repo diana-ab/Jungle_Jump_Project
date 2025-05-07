@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class InstructionsScreen extends BackgroundPanel {
+public class InstructionsScreen extends BasePanel {
 
     private JButton returnButton;
     private JPanel secondaryPanel;

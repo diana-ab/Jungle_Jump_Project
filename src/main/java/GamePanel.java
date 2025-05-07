@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class GamePanel extends BackgroundPanel {
+public class GamePanel extends BasePanel {
 
     private GameEngine gameEngine;
     private Player player;
