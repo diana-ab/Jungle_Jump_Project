@@ -23,6 +23,7 @@ public class GameImages {
     public static final String SCORE_BACKGROUND = "score_background";
     public static final String BANANA_POWER_UP = "banana_power_up";
     public static final String PLATFORM_MOVE = "platfprm_move";
+    public static final String SUPER_JUMP ="supe_jump";
 
 
     private HashMap<String, Image> imageMap = new HashMap<>();
@@ -43,8 +44,9 @@ public class GameImages {
         load(PLATFORM_BREAK, "images/platform_break.png");
         load(PLATFORM_LEAF, "images/platform_leaf.png");
         load(SCORE_BACKGROUND, "images/wooden_tile.png");
-        load(BANANA_POWER_UP, "images/wooden_tile.png");
+        load(BANANA_POWER_UP, "images/bnana.png");
         load(PLATFORM_MOVE, "images/movePlatfotm.png");
+        load(SUPER_JUMP, "images/super.png");
     }
 
     private void load(String key, String path) {
@@ -125,5 +127,8 @@ public class GameImages {
     }
     public Image getPlatformMove() {
         return get(PLATFORM_MOVE);
+    }
+    public Image getSuperJump() {
+        return get(SUPER_JUMP);
     }
 }

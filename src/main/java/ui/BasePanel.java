@@ -10,6 +10,7 @@ public class BasePanel extends JPanel {
     public static final int VERTICAL_GAP = 20;
     public static final int BACK_BUTTON_WIDTH = 180;
     public static final int BACK_BUTTON_HEIGHT = 80;
+
     private GameImages gameImages;
     private Image defaultBackground;
 

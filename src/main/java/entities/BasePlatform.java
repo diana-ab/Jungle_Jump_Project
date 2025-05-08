@@ -32,9 +32,7 @@ public class BasePlatform extends GameObject {
     }
 
 
-    public void moveDown(int gravity) {
-        this.setY(gravity);
-    }
+
 
     public boolean isBreakablePlatform() {
         return this.isBreakablePlatform;

@@ -76,7 +76,8 @@ public class GameEngine extends Thread {
         if (calculateDistance()) {
             gravity = -this.player.getYSpeed();
         }
-        platformManager.scrollPlatformsDown(gravity);
+        this.platformManager.scrollPlatformsDown(gravity);
+        this.powerUpManager.scrollPowerUoDown(gravity);
 
     }
 
@@ -108,7 +109,7 @@ public class GameEngine extends Thread {
             this.scrollPanel();
             this.scrollPlayer();
             this.platformManager.generatePlatformsIfNeeded();
-            this.powerUpManager.generatePowerUpIfNeeded(this.player.getY());
+            this.powerUpManager.generatePowerUpIfNeeded();
             playerJumpIfNeeded();
             this.powerUpManager.update(this.player);
             gamePanel.updateScore(this.score);

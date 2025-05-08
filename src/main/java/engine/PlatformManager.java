@@ -7,8 +7,7 @@ public class PlatformManager {
     public static final int PLATFORM_VERTICAL_SPACING = 100;
     public static final int LUCKY_NUMBER = 7;
     public static final int LIMIT_FOR_PLATFORM = 15;
-    private static final double CHANCE_BREAKABLE = 0.10; // 10%
-    private static final double CHANCE_MOVABLE = 0.20;
+
 
 
     private List<BasePlatform> platforms;
@@ -77,7 +76,6 @@ public class PlatformManager {
         }
         else if (this.canMakeMoveablePlatform && luckyNumber == LUCKY_NUMBER - 1&&
                 !this.didCreateBreakable) {
-            this.didCreateBreakable = false;
             platform= new MoveablePlatform(x, y);
         }
         else {
