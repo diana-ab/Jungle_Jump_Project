@@ -7,6 +7,8 @@ import java.util.Random;
 public class PlatformManager {
     public static final int PLATFORM_VERTICAL_SPACING = 100;
     public static final int LAKY_NUMBER = 15;
+    public static final int LIMIT_FOR_PLATFORM=20;
+
 
     private List<BasePlatform> platforms;
     private GamePanel gamePanel;
@@ -15,7 +17,7 @@ public class PlatformManager {
 
 
     public PlatformManager(GamePanel gamePanel,int xStartingPoint) {
-        this.platforms = new ArrayList<>();
+        this.platforms = new LimitedList<>(LIMIT_FOR_PLATFORM);
         this.gamePanel = gamePanel;
         this.canMakeBrekPlatform = false;
         this.xStartingPoint=xStartingPoint;
@@ -24,7 +26,6 @@ public class PlatformManager {
     public void generatePlatformsIfNeeded() {
         Random random = new Random();
         int highestY = this.gamePanel.getHeight();
-
         if (!this.platforms.isEmpty()) {
             for (BasePlatform platform : this.platforms) {
                 if (platform.getPlatformY() < highestY) {
@@ -34,11 +35,14 @@ public class PlatformManager {
         }
         while (highestY >= this.gamePanel.getY() - Platform.PLATFORM_HEIGHT) {
             int highestX = random.nextInt(this.gamePanel.getWidth() - Platform.PLATFORM_WIDTH);
+
             if(highestY==this.gamePanel.getHeight()){
                 highestX=this.xStartingPoint;
             }
+
             int geesLakyNum = random.nextInt(0, LAKY_NUMBER + 1);
             if (!isOverlappingPlatform(highestX, highestY, geesLakyNum)) {
+
                 if (this.canMakeBrekPlatform && geesLakyNum == LAKY_NUMBER) {
                     this.platforms.add(new BreakablePlatform(highestX, highestY));
                 } else {
@@ -56,6 +60,7 @@ public class PlatformManager {
 
     private boolean isOverlappingPlatform(int x, int y, int lakyNumber) {
         int panelWidth = this.gamePanel.getWidth();
+
         if (lakyNumber == LAKY_NUMBER && this.canMakeBrekPlatform) {
             panelWidth = panelWidth / 2;
         }
@@ -71,21 +76,9 @@ public class PlatformManager {
     }
 
     public void scrollPlatformsDown(int gravity) {
-        ArrayList<BasePlatform> toRemove = new ArrayList<>();
         for (BasePlatform platform : this.platforms) {
             platform.moveDown(gravity);
-            if (platform.getPlatformY() > this.gamePanel.getHeight()) {
-                toRemove.add(platform);
-            }
-            if(platform.isBreakablePlatform()&&platform.isBroken()){
-                toRemove.add(platform);
-
-            }
         }
-
-
-        this.platforms.removeAll(toRemove);
-        this.generatePlatformsIfNeeded();
     }
 
     public void makeBreakablePlatform() {

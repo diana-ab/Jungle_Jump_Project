@@ -104,6 +104,7 @@ public class GameEngine extends Thread {
             gamePanel.updateScore(this.score);
             this.gamePanel.repaint();
             this.levelUp();
+            System.out.println(this.platforms.size());
 
 
             try {
