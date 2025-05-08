@@ -1,3 +1,7 @@
+package ui;
+
+import assets.GameImages;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
@@ -13,7 +17,6 @@ public class GameEndPanel extends BasePanel {
         this.backToMenu = setBackToMenuButton(this);
         styleImageButton(this.backToMenu);
         this.endButtonPanel.add(this.backToMenu);
-
     }
 
     public void setBackToMenuButtonAction(ActionListener backToMenu) {

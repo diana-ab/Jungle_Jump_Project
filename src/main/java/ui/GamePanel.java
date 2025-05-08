@@ -1,4 +1,14 @@
+package ui;
+
+import engine.GameEngine;
+import entities.BasePlatform;
+import entities.Player;
+import entities.PowerUp;
+import input.PlayerKeyListener;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel extends BasePanel {
 
@@ -11,7 +21,6 @@ public class GamePanel extends BasePanel {
     private String text;
     private int x;
     private int y;
-
 
     public GamePanel(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -27,7 +36,6 @@ public class GamePanel extends BasePanel {
         this.score = 0;
         this.setFocusable(true);
         this.requestFocus();
-
     }
 
     public void updateScore(int score) {
@@ -55,7 +63,6 @@ public class GamePanel extends BasePanel {
         this.gameEngine = new GameEngine(this, this.player);
         this.gameEngine.start();
         this.gameEngine.startGame();
-
     }
 
     public void setScore(int score) {
@@ -67,16 +74,22 @@ public class GamePanel extends BasePanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-
-        for (BasePlatform platform : this.gameEngine.getPlatforms()) {
+        List<BasePlatform> platformsCopy = new ArrayList<>(gameEngine.getPlatforms());
+        for (BasePlatform platform : platformsCopy) {
             platform.draw(graphics);
         }
-        this.player.draw(graphics);
 
-        if (this.player.getPlayerX() > this.getWidth()) {
-            this.player.setPlayerX(this.getX() - this.player.getPlayerWidth());
-        } else if (this.player.getPlayerX() + this.player.getPlayerWidth() < this.getX()) {
-            this.player.setPlayerX(this.getWidth());
+
+        List<PowerUp> powerUps = new ArrayList<>(this.gameEngine.getPowerUps());
+        for (PowerUp powerUp : powerUps) {
+           powerUp.draw(graphics);
+        }
+
+        this.player.draw(graphics);
+        if (this.player.getX() > this.getWidth()) {
+            this.player.setX(this.getX() - this.player.getWidth());
+        } else if (this.player.getX() + this.player.getWidth() < this.getX()) {
+            this.player.setX(this.getWidth());
         }
     }
 }

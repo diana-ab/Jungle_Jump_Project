@@ -1,3 +1,8 @@
+package ui;
+
+import assets.Sound;
+import util.ScreenNames;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,7 +16,7 @@ public class MainFrame extends JFrame {
 
     private CardLayout cardLayout;
     private Container container;
-    private Menu menu;
+    private ui.Menu menu;
     private GamePanel gamePanel;
     private GameEndPanel gameEndPanel;
     private Sound sound;
@@ -69,9 +74,8 @@ public class MainFrame extends JFrame {
             try {
                 while (!this.gamePanel.gameLost()) {
                     System.out.print("");
-
                 }
-                this.sound.stoupBackgroundSound();
+                this.sound.stopBackgroundSound();
                 this.sound.playLoseSound();
                 System.out.println("endGAME");
                 this.cardLayout.show(this.container, ScreenNames.END_GAME);

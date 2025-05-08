@@ -1,4 +1,11 @@
-import javax.swing.*;
+package engine;
+
+import entities.BasePlatform;
+import entities.Player;
+import entities.PowerUp;
+import ui.GamePanel;
+
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +22,8 @@ public class GameEngine extends Thread {
     private PlatformManager platformManager;
     private int middlePanel;
     private int score;
+    private PowerUpManager powerUpManager;
+    private List<PowerUp> powerUps;
 
     public GameEngine(GamePanel gamePanel, Player player) {
         this.gamePanel = gamePanel;
@@ -23,20 +32,22 @@ public class GameEngine extends Thread {
         this.player = player;
         this.platforms = new ArrayList<>();
         this.running = false;
-        platformManager = new PlatformManager(gamePanel, this.gamePanel.getPlayerStartingX());
+        this.platformManager = new PlatformManager(gamePanel, this.gamePanel.getPlayerStartingX());
         this.platforms = platformManager.getPlatforms();
+        this.powerUpManager = new PowerUpManager(this.gamePanel);
+        this.powerUps = this.powerUpManager.getPowerUps();
     }
 
 
     private boolean isPlayerLanding(Player player1, BasePlatform platform1) {
         Rectangle playerLegs = new Rectangle(
-                player1.getPlayerX(),
-                player1.getPlayerY() + player1.getPlayerHeight() - COLLISION_THRESHOLD,
-                player1.getPlayerWidth() - COLLISION_THRESHOLD, COLLISION_THRESHOLD);
+                player1.getX(),
+                player1.getY() + player1.getHeight() - COLLISION_THRESHOLD,
+                player1.getWidth() - COLLISION_THRESHOLD, COLLISION_THRESHOLD);
 
         Rectangle platformHead = new Rectangle(
-                platform1.getPlatformX(),
-                platform1.getPlatformY()
+                platform1.getX(),
+                platform1.getY()
                 , platform1.getWidth() - COLLISION_THRESHOLD, COLLISION_THRESHOLD);
         if (playerLegs.intersects(platformHead) && player1.getYSpeed() >= 0) {
             if (platform1.isBreakablePlatform()) {
@@ -48,7 +59,6 @@ public class GameEngine extends Thread {
         } else {
             return false;
         }
-
     }
 
     private void playerJumpIfNeeded() {
@@ -60,7 +70,6 @@ public class GameEngine extends Thread {
             }
         }
     }
-
 
     private void scrollPanel() {
         int gravity = 0;
@@ -74,18 +83,18 @@ public class GameEngine extends Thread {
     private void scrollPlayer() {
         int yDistance = 0;
         if (calculateDistance()) {
-            int feetLocation = this.player.getPlayerY() + this.player.getPlayerHeight();
+            int feetLocation = this.player.getY() + this.player.getHeight();
             yDistance = this.middlePanel - feetLocation;
 
         }
         this.score += yDistance / 2;
         this.gamePanel.setScore(this.score);
-        this.player.setPlayerY(yDistance);
+        this.player.setY(yDistance);
 
     }
 
     private boolean calculateDistance() {
-        if (this.player.getPlayerY() + this.player.getPlayerHeight()
+        if (this.player.getY() + this.player.getHeight()
                 < this.middlePanel && this.player.getYSpeed() < 0) {
             return true;
         }
@@ -93,22 +102,21 @@ public class GameEngine extends Thread {
 
     }
 
-
     public void run() {
         while (this.running) {
             this.player.updateAction();
             this.scrollPanel();
             this.scrollPlayer();
             this.platformManager.generatePlatformsIfNeeded();
+            this.powerUpManager.generatePowerUpIfNeeded(this.player.getY());
             playerJumpIfNeeded();
+            this.powerUpManager.update(this.player);
             gamePanel.updateScore(this.score);
             this.gamePanel.repaint();
             this.levelUp();
-            System.out.println(this.platforms.size());
 
 
             try {
-
                 this.sleep(SLEEP);
             } catch (RuntimeException | InterruptedException e) {
                 throw new RuntimeException(e);
@@ -122,32 +130,35 @@ public class GameEngine extends Thread {
         }
     }
 
-    public boolean isPlayerOutOfBounds() {
-        if (this.player.getPlayerY() >= this.gamePanel.getHeight()) {
-            return true;
+        public boolean isPlayerOutOfBounds () {
+            if (this.player.getY() >= this.gamePanel.getHeight()) {
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
+        public List<BasePlatform> getPlatforms () {
+            return platforms;
+        }
 
-    public List<BasePlatform> getPlatforms() {
-        return platforms;
-    }
+        public void stopGame () {
+            this.running = false;
+        }
 
-    public void stopGame() {
-        this.running = false;
-    }
+        public void startGame () {
 
-    public void startGame() {
+            this.running = true;
+        }
 
-        this.running = true;
-    }
+        public int getScore () {
+            return score;
+        }
 
-    public int getScore() {
-        return score;
-    }
+        public Player getPlayer () {
+            return player;
+        }
 
-    public Player getPlayer() {
-        return player;
+    public List<PowerUp> getPowerUps() {
+        return powerUps;
     }
 }

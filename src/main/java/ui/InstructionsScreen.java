@@ -1,3 +1,7 @@
+package ui;
+
+import assets.GameImages;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
 

@@ -1,3 +1,8 @@
+package input;
+
+import entities.Player;
+import ui.GamePanel;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -8,7 +13,6 @@ public class PlayerKeyListener implements KeyListener {
     public PlayerKeyListener(Player player, GamePanel gamePanel) {
         this.player = player;
         this.gamePanel = gamePanel;
-
     }
 
     @Override
@@ -17,11 +21,11 @@ public class PlayerKeyListener implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            this.player.setMovingLeft(true);
+            this.player.setIsMovingLeft(true);
             this.gamePanel.repaint();
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            this.player.setMovingRight(true);
+            this.player.setIsMovingRight(true);
             this.gamePanel.repaint();
         }
     }
@@ -29,11 +33,11 @@ public class PlayerKeyListener implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            this.player.setMovingLeft(false);
+            this.player.setIsMovingLeft(false);
 
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            this.player.setMovingRight(false);
+            this.player.setIsMovingRight(false);
         }
     }
 }

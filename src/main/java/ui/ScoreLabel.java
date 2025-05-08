@@ -1,6 +1,9 @@
+package ui;
+
+import assets.GameImages;
+
 import javax.swing.*;
 import java.awt.*;
-
 
 public class ScoreLabel extends JLabel {
     private static final Font DEFAULT_FONT = new Font("Comic Sans MS", Font.BOLD, 24);
@@ -11,15 +14,17 @@ public class ScoreLabel extends JLabel {
     private static final int Y_POSITION = 0;
 
     private Image backgroundImage;
+    private GameImages gameImages;
 
-    public ScoreLabel(String text, int x, int yPOSITION) {
+    public ScoreLabel(String text, int x, int y) {
         super(text);
 
-        backgroundImage = new ImageIcon(getClass().getResource("images/wooden_tile.png")).getImage(); // Make sure the path is correct
+        this.gameImages = new GameImages();
+        backgroundImage = this.gameImages.getScoreBackgroundImage();
 
         this.setFont(DEFAULT_FONT);
         this.setForeground(TEXT_COLOR);
-        this.setBounds(x, yPOSITION, WIDTH_BOUNDS, HEIGHT_BOUNDS);
+        this.setBounds(x, y, WIDTH_BOUNDS, HEIGHT_BOUNDS);
         this.setOpaque(false);
         this.setHorizontalAlignment(SwingConstants.CENTER);
     }

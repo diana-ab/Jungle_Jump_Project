@@ -1,3 +1,7 @@
+package ui;
+
+import assets.GameImages;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -6,15 +10,14 @@ public class BasePanel extends JPanel {
     public static final int VERTICAL_GAP = 20;
     public static final int BACK_BUTTON_WIDTH = 180;
     public static final int BACK_BUTTON_HEIGHT = 80;
-
-    private Image background;
+    private GameImages gameImages;
+    private Image defaultBackground;
 
 
     public BasePanel(int x, int y, int width, int height) {
         this.setBounds(x, y, width, height);
-        this.background =
-                new ImageIcon(getClass().getResource("images/background.png")).getImage();
-
+        this.gameImages = new GameImages();
+        this.defaultBackground = gameImages.getBackgroundImage();
     }
 
     public JButton setBackToMenuButton(JPanel panel) {
@@ -34,7 +37,7 @@ public class BasePanel extends JPanel {
     }
 
     public void setBackground(Image background) {
-        this.background = background;
+        this.defaultBackground = background;
     }
 
     public ImageIcon setButtonImage(Image buttonImage, int buttonWidth, int buttonHeight) {
@@ -53,8 +56,8 @@ public class BasePanel extends JPanel {
 
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        if (background != null) {
-            graphics.drawImage(this.background, this.getX(), this.getY(),
+        if (this.defaultBackground != null) {
+            graphics.drawImage(this.defaultBackground, this.getX(), this.getY(),
                     this.getWidth(), this.getHeight(), this);
         }
     }

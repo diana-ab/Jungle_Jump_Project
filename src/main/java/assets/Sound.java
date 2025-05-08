@@ -1,3 +1,5 @@
+package assets;
+
 import javax.sound.sampled.*;
 import java.net.URL;
 import java.util.HashMap;
@@ -7,7 +9,7 @@ public class Sound {
     public static final String KEY_OF_LOSE_SOUND = "lose";
     public static final String KEY_OF_BACKGROUND_SOUND = "background";
 
-    private final HashMap<String, Clip> soundContinerHash = new HashMap<>();
+    private final HashMap<String, Clip> soundContainerHash = new HashMap<>();
 
     public Sound() {
         loadClip(KEY_OF_JUMP_SOUND, "/sound/jump.wav");
@@ -18,21 +20,17 @@ public class Sound {
     private void loadClip(String keyOfSound, String path) {
         try {
             URL soundURL = getClass().getResource(path);
-
             AudioInputStream audio = AudioSystem.getAudioInputStream(soundURL);
-
-            Clip soundValueForBukcet = AudioSystem.getClip();
-
-            soundValueForBukcet.open(audio);
-
-            soundContinerHash.put(keyOfSound, soundValueForBukcet);
+            Clip soundValueForBucket = AudioSystem.getClip();
+            soundValueForBucket.open(audio);
+            soundContainerHash.put(keyOfSound, soundValueForBucket);
         } catch (Exception e) {
-            System.err.println("YOU HAVE Error loading sound " + keyOfSound);
+            System.err.println("ERROR loading sound: " + keyOfSound);
         }
     }
 
     private void playSongOnce(String keyOfSound) {
-        Clip sound = soundContinerHash.get(keyOfSound);
+        Clip sound = soundContainerHash.get(keyOfSound);
         if (sound != null) {
             sound.stop();
             sound.setFramePosition(0);
@@ -41,7 +39,7 @@ public class Sound {
     }
 
     private void loopOfSound(String keyOfSound) {
-        Clip sound = soundContinerHash.get(keyOfSound);
+        Clip sound = soundContainerHash.get(keyOfSound);
         if (sound != null) {
             sound.loop(Clip.LOOP_CONTINUOUSLY);
             sound.start();
@@ -49,7 +47,7 @@ public class Sound {
     }
 
     private void stopSound(String keyOfSound) {
-        Clip sound = soundContinerHash.get(keyOfSound);
+        Clip sound = soundContainerHash.get(keyOfSound);
         if (sound != null) {
             sound.stop();
         }
@@ -71,9 +69,7 @@ public class Sound {
         this.loopOfSound(KEY_OF_BACKGROUND_SOUND);
     }
 
-    public void stoupBackgroundSound() {
+    public void stopBackgroundSound() {
         this.stopSound(KEY_OF_BACKGROUND_SOUND);
     }
-
-
 }

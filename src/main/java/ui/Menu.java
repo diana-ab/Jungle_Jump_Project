@@ -1,3 +1,7 @@
+package ui;
+
+import assets.GameImages;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,13 +18,15 @@ public class Menu extends BasePanel {
     private JPanel buttonPanel;
     private Image startGameImage;
     private Image instructionsImage;
+    private GameImages gameImages;
 
     public Menu(int x, int y, int width, int height) {
         super(x, y, width, height);
 
-        this.setBackground(new ImageIcon(getClass().getResource("images/menu.png")).getImage());
-        this.startGameImage = new ImageIcon(getClass().getResource("/images/start_game.png")).getImage();
-        this.instructionsImage = new ImageIcon(getClass().getResource("images/instructions.png")).getImage();
+        this.gameImages = new GameImages();
+        this.setBackground(this.gameImages.getMenuImage());
+        this.startGameImage = this.gameImages.getStartButtonImage();
+        this.instructionsImage = this.gameImages.getInstructionsButtonImage();
 
         this.buttonPanel = createButtonPanel(this);
 
