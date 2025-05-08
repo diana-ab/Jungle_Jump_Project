@@ -8,11 +8,13 @@ import java.awt.event.ActionListener;
 public class GameEndPanel extends BasePanel {
     private JButton backToMenu;
     private JPanel endButtonPanel;
+    private GameImages gameImages;
 
 
     public GameEndPanel(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.setBackground(new ImageIcon(getClass().getResource("images/end_game.png")).getImage());
+        this.gameImages = new GameImages();
+        this.setBackground(this.gameImages.getGameOverImage());
         this.endButtonPanel = createButtonPanel(this);
         this.backToMenu = setBackToMenuButton(this);
         styleImageButton(this.backToMenu);

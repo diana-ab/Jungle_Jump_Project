@@ -1,4 +1,5 @@
-import javax.swing.*;
+package entities;
+
 import java.awt.*;
 
 public class BasePlatform extends GameObject {
@@ -9,6 +10,7 @@ public class BasePlatform extends GameObject {
     private Image platformImage;
     private boolean isBreakablePlatform;
     private boolean isBroken;
+    private boolean isMoveable;
 
     public BasePlatform(int platformX, int platformY) {
         super(platformX, platformY, PLATFORM_WIDTH, PLATFORM_HEIGHT);
@@ -51,5 +53,13 @@ public class BasePlatform extends GameObject {
 
     public void setBroken(boolean broken) {
         isBroken = broken;
+    }
+
+    public boolean isMoveable() {
+        return isMoveable;
+    }
+
+    public void setMoveable(boolean moveable) {
+        isMoveable = moveable;
     }
 }

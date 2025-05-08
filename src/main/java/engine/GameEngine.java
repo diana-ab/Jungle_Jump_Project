@@ -112,7 +112,8 @@ public class GameEngine extends Thread {
             this.powerUpManager.generatePowerUpIfNeeded();
             playerJumpIfNeeded();
             this.powerUpManager.update(this.player);
-            gamePanel.updateScore(this.score);
+            this.gamePanel.updateScore(this.score);
+            this.platformManager.updateMoveablePlatforms();
             this.gamePanel.repaint();
             this.levelUp();
 
@@ -128,6 +129,12 @@ public class GameEngine extends Thread {
     public void levelUp() {
         if (this.score > LEVEL_THRESHOLD) {
             this.platformManager.makeBreakablePlatform();
+        }
+        if (this.score > LEVEL_THRESHOLD * 5) {
+            this.platformManager.makeMoveablePlatform();
+        }
+        if (this.score > LEVEL_THRESHOLD * 12) {
+            this.platformManager.moreDifficult();
         }
     }
 

@@ -9,11 +9,12 @@ public class InstructionsScreen extends BasePanel {
 
     private JButton returnButton;
     private JPanel secondaryPanel;
+    private GameImages gameImages;
 
     public InstructionsScreen(int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.setBackground(new ImageIcon(getClass().getResource("images/jungle_jump_instructions.png")).getImage());
-
+        this.gameImages = new GameImages();
+        this.setBackground(this.gameImages.getInstructionsScreenImage());
         this.secondaryPanel = createButtonPanel(this);
         this.returnButton = setBackToMenuButton(this);
         styleImageButton(this.returnButton);

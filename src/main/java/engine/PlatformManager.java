@@ -1,3 +1,9 @@
+package engine;
+
+import entities.*;
+import ui.GamePanel;
+import util.LimitedList;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +20,11 @@ public class PlatformManager {
     private GamePanel gamePanel;
     private boolean canCreateBreakable;
     private int xStartingPoint;
+    private boolean didCreateBreakable;
+    private boolean canMakeMoveablePlatform;
+    private boolean canMoveFaster;
+
+
 
 
     public PlatformManager(GamePanel gamePanel, int xStartingPoint) {
@@ -90,10 +101,22 @@ public class PlatformManager {
         return platforms;
     }
 
+
+
+
+
     private boolean overlappingPlatform(int x, int y, int lakyNumber) {
         int panelWidth = this.gamePanel.getWidth();
         if (lakyNumber == LUCKY_NUMBER && this.canCreateBreakable&&!this.didCreateBreakable) {
             panelWidth = panelWidth / 2;
+        }
+
+        if (lakyNumber == LUCKY_NUMBER - 1 && this.canMakeMoveablePlatform && !this.didCreateBreakable) {
+            for (BasePlatform platform : this.platforms) {
+                if (platform.getY() == y) {
+                    return true;
+                }
+            }
         }
         Rectangle newPlatformRect = new Rectangle(x, y, panelWidth, Platform.PLATFORM_HEIGHT);
         for (BasePlatform platform : this.platforms) {
@@ -106,6 +129,8 @@ public class PlatformManager {
         return false;
     }
 
+
+
     public void scrollPlatformsDown(int gravity) {
         for (BasePlatform platform : this.platforms) {
             platform.moveDown(gravity);
@@ -115,4 +140,33 @@ public class PlatformManager {
     public void makeBreakablePlatform() {
         this.canCreateBreakable = true;
     }
+
+    public void makeMoveablePlatform() {
+        this.canMakeMoveablePlatform = true;
+    }
+    public void moreDifficult(){
+        this.canMoveFaster=true;
+    }
+
+    public void updateMoveablePlatforms() {
+        for (BasePlatform platform : this.platforms) {
+            if (platform.isMoveable()) {
+                MoveablePlatform moveablePlatform = (MoveablePlatform) platform;
+                if (moveablePlatform.getX() <= 0) {
+                    moveablePlatform.setMovingRight(true);
+                    moveablePlatform.setMovingLeft(false);
+                } else if (moveablePlatform.getX() +
+                        moveablePlatform.getWidth() >= gamePanel.getWidth()) {
+                    moveablePlatform.setMovingRight(false);
+                    moveablePlatform.setMovingLeft(true);
+                }
+                if(this.canMoveFaster&&!moveablePlatform.isMovingFaster()){
+                    moveablePlatform.moreSpeed();;
+                }
+                moveablePlatform.startMoving();
+            }
+        }
+
+    }
+
 }

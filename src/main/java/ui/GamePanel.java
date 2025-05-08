@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamePanel extends BasePanel {
+    private static final int SCORE_LABEL_X = 20;
+    private static final int SCORE_LABEL_y = 20;
+
 
     private GameEngine gameEngine;
     private Player player;
@@ -22,17 +25,15 @@ public class GamePanel extends BasePanel {
     private int x;
     private int y;
 
+
     public GamePanel(int x, int y, int width, int height) {
         super(x, y, width, height);
         this.text = "Score: ";
-        this.x = 20;
-        this.y = 20;
+        this.x = SCORE_LABEL_X;
+        this.y = SCORE_LABEL_y;
         this.setLayout(null);
-
-        scoreLabel = new ScoreLabel(this.text, this.x, this.y);
+        this.scoreLabel = new ScoreLabel(this.text, this.x, this.y);
         this.add(scoreLabel);
-
-
         this.score = 0;
         this.setFocusable(true);
         this.requestFocus();

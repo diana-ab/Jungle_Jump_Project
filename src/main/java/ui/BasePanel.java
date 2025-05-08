@@ -22,8 +22,7 @@ public class BasePanel extends JPanel {
     }
 
     public JButton setBackToMenuButton(JPanel panel) {
-        Image backButton =
-                new ImageIcon(getClass().getResource("/images/back_to_menu.png")).getImage();
+        Image backButton = gameImages.getBackButtonImage();
         JButton backToMenuButton = new JButton(setButtonImage(backButton, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT));
         styleImageButton(backToMenuButton);
         return backToMenuButton;
