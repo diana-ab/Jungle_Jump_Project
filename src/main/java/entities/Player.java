@@ -32,8 +32,8 @@ public class Player extends GameObject implements Movement {
         this.movingRight = false;
         this.isJumping = true;
         this.sound = new Sound();
-        this.jumpForce=JUMP_FORCE;
-        this.ifSuperJump =false;
+        this.jumpForce = JUMP_FORCE;
+        this.ifSuperJump = false;
     }
 
     public void setIsMovingLeft(boolean moving) {
@@ -69,15 +69,16 @@ public class Player extends GameObject implements Movement {
     public void draw(Graphics graphics) {
         Image currentImage;
         if (this.isJumping) {
-            if(this.ifSuperJump){currentImage=gameImages.getSuperJump();}
-            else {
-            if (this.movingLeft) {
-                currentImage = gameImages.getMonkeyJumpingLeftImage();
-            } else if (this.movingRight) {
-                currentImage = gameImages.getMonkeyJumpingRightImage();
+            if (this.ifSuperJump) {
+                currentImage = gameImages.getSuperJump();
             } else {
-                currentImage = gameImages.getMonkeyJumpingImage();
-            }
+                if (this.movingLeft) {
+                    currentImage = gameImages.getMonkeyJumpingLeftImage();
+                } else if (this.movingRight) {
+                    currentImage = gameImages.getMonkeyJumpingRightImage();
+                } else {
+                    currentImage = gameImages.getMonkeyJumpingImage();
+                }
             }
         } else {
             currentImage = gameImages.getMonkeyStandingImage();
@@ -120,14 +121,15 @@ public class Player extends GameObject implements Movement {
         this.ifSuperJump = ifSuperJump;
     }
 
-    public void superJump(){
+    public void superJump() {
         this.sound.playPowerUp();
-        this.jumpForce=this.jumpForce*4;
+        this.ySpeed = this.jumpForce * 4;
         setIfSuperJump(true);
     }
-    public void stopSuperJump(){
+
+    public void stopSuperJump() {
         this.sound.stopPlayPowerUp();
-        this.jumpForce=JUMP_FORCE;
+        this.jumpForce = JUMP_FORCE;
         setIfSuperJump(false);
     }
 }

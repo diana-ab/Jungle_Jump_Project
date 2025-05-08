@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class PowerUpManager {
     private static final int LUCKY_CHANCE = 2;
-    private static final int CHANCE=1000;
+    private static final int CHANCE = 650;
 
     private List<PowerUp> powerUps;
     private GamePanel gamePanel;
@@ -21,39 +21,38 @@ public class PowerUpManager {
     public PowerUpManager(GamePanel gamePanel) {
         this.powerUps = new LimitedList<>(LUCKY_CHANCE);
         this.gamePanel = gamePanel;
-        this.used=false;
+        this.used = false;
     }
 
     public void generatePowerUpIfNeeded() {
-        if(this.powerUps.size()==LUCKY_CHANCE){
-            if(removePowerUp()){
+        if (this.powerUps.size() == LUCKY_CHANCE) {
+            if (removePowerUp()) {
                 this.generatePowerUp();
             }
-        }
-        else {
-        Random random = new Random();
-        if (random.nextInt(CHANCE) < LUCKY_CHANCE) {
-            this.generatePowerUp();
-        }
+        } else {
+            Random random = new Random();
+            if (random.nextInt(CHANCE) < LUCKY_CHANCE) {
+                this.generatePowerUp();
+            }
         }
 
     }
 
-    private void generatePowerUp(){
+    private void generatePowerUp() {
         Random random = new Random();
         int powerUpX = random.nextInt(this.gamePanel.getWidth());
-        JumpBoostPowerUp power=
-                new JumpBoostPowerUp(powerUpX,this.gamePanel.getY()-JumpBoostPowerUp.BANANA_HEIGHT);
+        JumpBoostPowerUp power =
+                new JumpBoostPowerUp(powerUpX, this.gamePanel.getY() - JumpBoostPowerUp.BANANA_HEIGHT);
         this.powerUps.add(power);
 
     }
 
-    private boolean removePowerUp(){
-            if (this.powerUps.get(0).getY()>this.gamePanel.getHeight()+this.powerUps.get(0).getHeight()){
-                this.powerUps.remove(0);
-                return true;
-            }
-     return false;
+    private boolean removePowerUp() {
+        if (this.powerUps.get(0).getY() > this.gamePanel.getHeight() + this.powerUps.get(0).getHeight()) {
+            this.powerUps.remove(0);
+            return true;
+        }
+        return false;
     }
 
 
@@ -61,7 +60,7 @@ public class PowerUpManager {
         Rectangle playerBounds = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 
         this.powerUps.removeIf(p -> {
-            if (playerBounds.intersects(p.getBounds())&&!player.isIfSuperJump()) {
+            if (playerBounds.intersects(p.getBounds()) && !player.isIfSuperJump()) {
                 p.applyEffect(player);
                 return true;
             }
