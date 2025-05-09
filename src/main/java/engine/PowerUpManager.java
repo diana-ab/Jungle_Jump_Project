@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class PowerUpManager {
     private static final int LUCKY_CHANCE = 2;
-    private static final int CHANCE = 650;
+    private static final int CHANCE = 1000;
 
     private List<PowerUp> powerUps;
     private GamePanel gamePanel;
